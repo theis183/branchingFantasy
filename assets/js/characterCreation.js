@@ -8,6 +8,7 @@ var config = {
   };
   firebase.initializeApp(config);
   var database = firebase.database();
+  
 
   var points = 10
 
@@ -66,7 +67,8 @@ var idGen =new Generator();
   $(document).on("click", "#submit-btn", function(){
       if(points == 0) {
         id = idGen.getId()
-        database.ref().child(id).set({
+        var userId = firebase.auth().currentUser.uid
+        database.ref("users/" + userId + "/characters").child(id).set({
             myStrength: $("#Strength").attr("points"),
             myAgility: $("#Agility").attr("points"),
             myConstitution: $("#Constitution").attr("points"),
