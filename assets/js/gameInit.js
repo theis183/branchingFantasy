@@ -9,8 +9,9 @@ var config = {
   firebase.initializeApp(config);
   var database = firebase.database();
   id = window.location.search.substring(1)
-  myCharDB = database.ref(id)
-  
+  firebase.auth().onAuthStateChanged(function(user) {
+  userId = firebase.auth().currentUser.uid
+  myCharDB = database.ref("users/" + userId + "/characters/" + id)
   myCharDB.on("value", function (childSnapshot){
     var str = childSnapshot.val().myStrength
     var agi = childSnapshot.val().myAgility
@@ -30,3 +31,5 @@ var config = {
     $("#character-info").html(summary)
     
   })
+
+})

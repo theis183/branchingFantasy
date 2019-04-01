@@ -11,9 +11,11 @@ var config = {
   
 
   
-
+  firebase.auth().onAuthStateChanged(function(user) {
+    console.log("state change")
+    if (user){
     var userId = firebase.auth().currentUser.uid
-    database.ref("user/" + userId +"/characters").orderByChild("dateAdded").on("child_added", function(childSnapshot) {
+    database.ref("users/" + userId +"/characters").orderByChild("dateAdded").on("child_added", function(childSnapshot) {
       console.log(childSnapshot.val())
       var str = childSnapshot.val().myStrength
       var agi = childSnapshot.val().myAgility
@@ -26,11 +28,16 @@ var config = {
       var btn = $('<button type="button" class="btn btn-primary start-game-btn">').text("Continue").attr("assoc-id", childSnapshot.val().myid)    
       $("#character-selection").append(div).append(btn)
     })
+  }
+  else{
+    window.location.href = "index.html"
+  }
+  })
 
   
 
   $(document).on("click", ".start-game-btn", function(){
     window.location.href = "game.html?" + $(this).attr("assoc-id")
   })
-
+  
   

@@ -21,12 +21,9 @@ var config = {
       // Sign in existing user
     firebase.auth().signInWithEmailAndPassword(email, password)
 .catch(function(err) {
-    stored = false
+
   // Handle errors
 });
-    if(stored) {
-        sessionStorage.userId = firebase.auth().currentUser.uid
-    }
   })
 
 
